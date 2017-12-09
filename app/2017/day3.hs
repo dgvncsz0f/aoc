@@ -80,6 +80,7 @@ produce = 1 : go (M.singleton (0, 0) 1) directions (0, 0)
       let yx'     = nextPos dir yx
           (m', v) = valueAt yx' m
       in v : go m' dirs yx'
+    go _ _ _             = error "bad input"
 
 main :: IO ()
 main = do

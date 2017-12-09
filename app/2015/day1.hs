@@ -4,9 +4,10 @@ count :: Int -> String -> Int
 count n []         = n
 count n ('(' : xs) = count (succ n) xs
 count n (')' : xs) = count (pred n) xs
+count _ _          = error "bad input"
 
 find :: Int -> Int -> String -> Int
-find i n []   = error "invalid input"
+find _ _ []   = error "bad input"
 find i n (x : xs)
   | n < 0     = i
   | otherwise = find (succ i) (count n [x]) xs

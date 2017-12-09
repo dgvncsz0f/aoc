@@ -109,6 +109,7 @@ findUnbalanced t@(Branch _ branches) =
        ([tw], _) -> findUnbalanced tw <|> pure t
        (_, [tw]) -> findUnbalanced tw <|> pure t
        _         -> Nothing
+findUnbalanced _                     = error "bad input"
 
 weightAdjust :: Tree (Node, Int) -> Int
 weightAdjust tree =
