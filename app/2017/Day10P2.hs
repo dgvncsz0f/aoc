@@ -1,4 +1,11 @@
-module Main (main) where
+module Day10P2
+  ( context
+  , parseInput
+  , mkInput
+  , compute
+  , denseHash
+  , toHex
+  ) where
 
 import Data.Char
 import Data.Bits
@@ -8,6 +15,9 @@ data Context = Context Int [Int]
 
 fromList :: [Int] -> Context
 fromList xs = Context 0 xs
+
+context :: Context
+context = fromList [0..255]
 
 slice :: Int -> Context -> Context
 slice by (Context offset list) =
@@ -46,10 +56,13 @@ toHex :: [Int] -> String
 toHex = concatMap toHexI
 
 parseInput :: String -> [Int]
-parseInput = (++ [17,31,73,47,23]) . map ord
+parseInput = zip [0..]
+             . concat
+             . replicate 64
+             . (++ [17,31,73,47,23])
+             . map ord
 
 main :: IO ()
 main = do
   input <- parseInput <$> getLine
-  let lengths = zip [0..] (concat $ replicate 64 input)
-  print $ toHex $ denseHash $ compute (fromList [0..255]) lengths
+  print $ toHex $ denseHash $ compute context input
